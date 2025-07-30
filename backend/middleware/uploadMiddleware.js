@@ -1,6 +1,6 @@
 const multer = require("multer")
 const { CloudinaryStorage } = require("multer-storage-cloudinary")
-const cloudinary = require("../config/cloudinaryConfig");
+const cloudinary = require("../config/cloudinary");
 
 //configure cloudinary storage
 const storage = new CloudinaryStorage({
