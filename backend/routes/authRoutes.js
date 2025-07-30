@@ -19,9 +19,12 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
   if(!req.file){
     return res.status(400).json({message: "no file uploaded"});
   }
-  const imageUrl = `https://${req.get("host")}/uploads/${encodeURIComponent(req.file.filename)}`;
-
-  res.status(200).json({imageUrl});
+  try {
+    const imageUrl = req.file.path;
+    res.json({ imageUrl });
+  } catch (err) {
+    res.status(500).json({ message: "Image upload failed", error: err });
+  }
 });
 
 module.exports = router;

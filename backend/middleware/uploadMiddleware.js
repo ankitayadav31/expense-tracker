@@ -1,24 +1,24 @@
 const multer = require("multer")
+const { CloudinaryStorage } = require("multer-storage-cloudinary")
 
-//configure storage
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    },
-});
+//configure cloudinary storage
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "expense-tracker",
+        allowed_formats: ["jpg", "png", "jpeg"],
+    }
+})
 
 //file filter
-const fileFilter = (req, file, cb) => {
-    const allowedTypes = ['image/jpeg', 'image/png'];
-    if(allowedTypes.includes(file.mimetype)){
-        cb(null, true)
-    }else{
-        cb(new Error('Only .jpeg .jpg and .png formats are allowed'), false);
-    }
-};
+// const fileFilter = (req, file, cb) => {
+//     const allowedTypes = ['image/jpeg', 'image/png'];
+//     if(allowedTypes.includes(file.mimetype)){
+//         cb(null, true)
+//     }else{
+//         cb(new Error('Only .jpeg .jpg and .png formats are allowed'), false);
+//     }
+// };
 
 const upload = multer({storage, fileFilter})
 
