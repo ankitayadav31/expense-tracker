@@ -1,9 +1,10 @@
 const multer = require("multer")
 const { CloudinaryStorage } = require("multer-storage-cloudinary")
+const cloudinary = require("../config/cloudinaryConfig");
 
 //configure cloudinary storage
 const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
+    cloudinary:  cloudinary,
     params: {
         folder: "expense-tracker",
         allowed_formats: ["jpg", "png", "jpeg"],
