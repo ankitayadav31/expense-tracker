@@ -1,15 +1,15 @@
-const multer = require("multer")
-const { CloudinaryStorage } = require("multer-storage-cloudinary")
+const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinary");
 
 //configure cloudinary storage
 const storage = new CloudinaryStorage({
-    cloudinary:  cloudinary,
-    params: {
-        folder: "expense-tracker",
-        allowed_formats: ["jpg", "png", "jpeg"],
-    }
-})
+  cloudinary: cloudinary,
+  params: {
+    folder: "expense-tracker",
+    allowed_formats: ["jpg", "png", "jpeg"],
+  },
+});
 
 //file filter
 // const fileFilter = (req, file, cb) => {
@@ -21,6 +21,6 @@ const storage = new CloudinaryStorage({
 //     }
 // };
 
-const upload = multer({storage})
+const upload = multer({ storage });
 
 module.exports = upload;

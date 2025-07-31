@@ -1,5 +1,5 @@
 const express = require("express");
-const { protect } = require("../middleware/authMiddleWare")
+const { protect } = require("../middleware/authMiddleWare");
 
 const {
   registerUser,
@@ -7,7 +7,7 @@ const {
   getUserInfo,
 } = require("../controllers/authController");
 
-const upload = require("../middleware/uploadMiddleware")
+const upload = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
 
@@ -15,16 +15,27 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/getUser", protect, getUserInfo);
 
-router.post("/upload-image", upload.single("image"), (req, res) => {
-  if(!req.file){
-    return res.status(400).json({message: "no file uploaded"});
-  }
+router.post("/upload-image", upload.single("image"), async (req, res) => {
   try {
-    const imageUrl = req.file.path;
+    console.log("📸 Image upload route hit");
+
+    if (!req.file) {
+      console.log("❌ No file received");
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    console.log("✅ Cloudinary file object:", req.file);
+
+    const imageUrl = req.file.path || req.file.secure_url;
+
+    console.log("🌐 Image URL:", imageUrl);
+
     res.json({ imageUrl });
   } catch (err) {
-    res.status(500).json({ message: "Image upload failed", error: err });
+    console.error("🔥 Upload Error:", err);
+    res.status(500).json({ message: "Image upload failed", error: err.message });
   }
 });
+
 
 module.exports = router;
