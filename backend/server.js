@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
@@ -13,9 +12,9 @@ const app = express();
 //Middleware to handle cors
 app.use(
   cors({
-    origin: "*",
+    origin: "*" || CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    //allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -32,5 +31,6 @@ app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`));
+app.listen(process.env.PORT, () =>
+  console.log(`Server running on port http://localhost:${process.env.PORT}`)
+);
