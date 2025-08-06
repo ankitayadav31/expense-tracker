@@ -12,7 +12,8 @@ const app = express();
 //Middleware to handle cors
 app.use(
   cors({
-    origin: "*" || CLIENT_URL,
+    origin: CLIENT_URL,
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     //allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -31,6 +32,6 @@ app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 
-app.listen(process.env.PORT, () =>
+app.listen(process.env.PORT || 5000, () =>
   console.log(`Server running on port http://localhost:${process.env.PORT}`)
 );
