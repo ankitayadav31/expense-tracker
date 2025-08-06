@@ -12,7 +12,7 @@ const app = express();
 //Middleware to handle cors
 app.use(
   cors({
-    origin: CLIENT_URL,
+    origin: process.env.CLIENT_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     //allowedHeaders: ["Content-Type", "Authorization"],
