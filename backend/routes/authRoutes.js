@@ -19,6 +19,9 @@ router.post("/upload-image", upload.single("image"), async (req, res) => {
   try {
     console.log("📸 Image upload route hit");
 
+    console.log("req.file:", req.file); // helps in debugging
+    console.log("req.body:", req.body);
+
     if (!req.file) {
       console.log("❌ No file received");
       return res.status(400).json({ message: "No file uploaded" });
@@ -33,9 +36,10 @@ router.post("/upload-image", upload.single("image"), async (req, res) => {
     res.json({ imageUrl });
   } catch (err) {
     console.error("🔥 Upload Error:", err);
-    res.status(500).json({ message: "Image upload failed", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Image upload failed", error: err.message });
   }
 });
-
 
 module.exports = router;
